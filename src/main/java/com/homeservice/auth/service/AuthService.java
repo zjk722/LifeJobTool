@@ -15,7 +15,6 @@ import com.homeservice.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,6 @@ public class AuthService {
         smsCodeService.sendLoginCode(phone);
     }
 
-    @Transactional
     public LoginResponse loginBySms(SmsLoginRequest request) {
         smsCodeService.verify(request.phone(), request.code());
 

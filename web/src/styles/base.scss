@@ -1,0 +1,74 @@
+:root {
+  --ink: #0f1c15;
+  --spruce: #163b2b;
+  --spruce-deep: #0b2418;
+  --moss: #2f5d45;
+  --brass: #c9973f;
+  --brass-light: #e7c27d;
+  --paper: #f7f4ec;
+  --mist: #e7ede6;
+  --muted: #5b685f;
+  --line: #d3dbd2;
+  --danger: #a8452f;
+
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-display: "Songti SC", "Noto Serif SC", "STSong", "SimSun", serif;
+
+  --el-color-primary: var(--spruce);
+  --el-color-danger: var(--danger);
+  --el-font-family: var(--font-sans);
+  --el-border-radius-base: 2px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--brass-light);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

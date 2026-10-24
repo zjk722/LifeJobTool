@@ -21,7 +21,8 @@ spring:
       host: ${REDIS_HOST:127.0.0.1}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
-      timeout: 2s
+      # 旧版 Redis 或首次建连时可能需要更久，2s 容易误报超时
+      timeout: 5s
       database: 0
 
   rabbitmq:

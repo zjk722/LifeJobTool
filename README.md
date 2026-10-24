@@ -10,7 +10,7 @@
 | 后端 | Spring Boot 3.3、MyBatis-Plus |
 | 存储 | MySQL 8、Redis 7 |
 | 消息 | RabbitMQ（延迟 / 重试）、Kafka（订单事件流，骨架阶段未启用） |
-| 前端 | Vue 3 + Element Plus（AI 辅助） |
+| 前端 | Vue 3 + TypeScript + Vite + Element Plus |
 | 部署 | Nginx、Docker Compose |
 
 ## 快速开始
@@ -50,6 +50,7 @@ mvn test
 ## 工程结构
 
 ```
+web/            Vue 3 + TypeScript + Vite + Element Plus
 src/main/java/com/homeservice
 ├── common      通用返回、异常、TraceId、MyBatis-Plus / CORS 配置
 ├── auth        验证码登录、JWT、短信通道抽象
@@ -82,6 +83,56 @@ POST /api/auth/logout
 - JWT 默认 2 小时，退出登录把 `jti` 加入 Redis 黑名单
 - 生产环境必须改 `JWT_SECRET`，并把 `SMS_PROVIDER` 换成真实通道
 
+### 验证码测试
+
+1. 启动 Redis（建议 7.x；本机 3.2 也可以，`application.yml` 的超时已调到 5s）
+2. 启动后端，确保 `MYSQL_PASSWORD` 正确
+3. 在 IDEA 打开 `http/auth.http`，执行“发送验证码”
+4. 看后端日志里的 `[MockSms] ... code=xxxxxx`
+5. 用 `redis-cli` 确认存储：
+
+```bash
+redis-cli GET sms:code:login:13800138000
+redis-cli TTL sms:code:login:13800138000
+redis-cli TTL sms:cooldown:13800138000
+```
+
+正常结果：验证码存在，TTL 约 300；冷却 TTL 约 60。
+
+- 60 秒内再发一次 → 429
+- 连续输错 5 次 → 第 6 次返回“验证码已过期”
+- 输对后验证码会被删除，再登录必须重新发码
+
+> 前端开发默认走 Mock，不经过 Redis；要验证真实链路，把 `web/.env.local` 的 `VITE_USE_MOCK` 设为 `false`，或者直接用 `http/auth.http` 调后端。
+
+## 前端
+
+```bash
+cd web
+pnpm install
+pnpm dev
+```
+
+打开 `http://127.0.0.1:5173`。
+
+开发环境默认走 mock，验证码固定 `123456`，不需要启动后端和 MySQL。联调真实后端时，在 `web/.env.local` 里设置：
+
+```bash
+VITE_USE_MOCK=false
+```
+
+Vite 会把 `/api` 代理到 `http://127.0.0.1:8080`。
+
+构建：
+
+```bash
+pnpm build
+```
+
+登录页预览：
+
+![登录页](web/docs/screenshots/login-desktop.png)
+
 ## 文档
 
 - 需求与设计文档：`../家政派单系统-需求与设计.md`（仓库外，不纳入版本控制）
@@ -91,6 +142,7 @@ POST /api/auth/logout
 - [x] 需求与领域设计
 - [x] 工程骨架
 - [x] 手机号验证码登录（JWT）
+- [x] 登录前端页面
 - [ ] 下单与状态机
 - [ ] 派单引擎
 - [ ] 履约与结算
