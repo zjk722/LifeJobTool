@@ -1,0 +1,59 @@
+# ---------- Java / Maven ----------
+target/
+*.class
+*.jar
+*.war
+*.ear
+!.mvn/wrapper/maven-wrapper.jar
+hs_err_pid*
+replay_pid*
+
+# ---------- IDE ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+.project
+.classpath
+.settings/
+.factorypath
+*.hprof
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------- Node / Vue ----------
+node_modules/
+dist/
+dist-ssr/
+.vite/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ---------- Config / secrets ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+application-local.yml
+application-local.yaml
+application-local.properties
+
+# ---------- Runtime ----------
+logs/
+*.log
+tmp/
+temp/
+.attach_pid*
+
+# ---------- Test / coverage ----------
+coverage/
+.nyc_output/
