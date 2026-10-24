@@ -11,7 +11,10 @@ public enum ErrorCode {
     INTERNAL_ERROR(50000, "系统内部错误", 500),
 
     ORDER_STATE_INVALID(41001, "订单状态不允许该操作", 409),
-    SLOT_NOT_AVAILABLE(41002, "时间槽已被占用", 409);
+    SLOT_NOT_AVAILABLE(41002, "时间槽已被占用", 409),
+    SMS_CODE_EXPIRED(41003, "验证码已过期", 400),
+    SMS_CODE_INVALID(41004, "验证码错误", 400),
+    USER_DISABLED(41005, "账号已被禁用", 403);
 
     private final int code;
     private final String message;

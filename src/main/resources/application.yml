@@ -73,6 +73,16 @@ mybatis-plus:
       id-type: auto
   mapper-locations: classpath*:/mapper/**/*.xml
 
+jwt:
+  secret: ${JWT_SECRET:dev-only-secret-change-me-0123456789abcdef0123456789abcdef}
+  expire-seconds: ${JWT_EXPIRE_SECONDS:7200}
+  issuer: ${JWT_ISSUER:home-service}
+
+sms:
+  provider: ${SMS_PROVIDER:mock}
+  sign-name: ${SMS_SIGN_NAME:家政服务}
+  template-code: ${SMS_TEMPLATE_CODE:SMS_000000000}
+
 logging:
   level:
     root: info

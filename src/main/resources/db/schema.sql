@@ -8,6 +8,18 @@ CREATE DATABASE IF NOT EXISTS home_service
 
 USE home_service;
 
+CREATE TABLE IF NOT EXISTS sys_user (
+    id         BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    phone      VARCHAR(20)     NOT NULL,
+    nickname   VARCHAR(32)     NOT NULL DEFAULT '',
+    avatar     VARCHAR(255)    NULL,
+    role       VARCHAR(16)     NOT NULL DEFAULT 'CUSTOMER' COMMENT 'CUSTOMER/WORKER/ADMIN',
+    status     VARCHAR(16)     NOT NULL DEFAULT 'NORMAL' COMMENT 'NORMAL/DISABLED',
+    created_at DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_user_phone (phone)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+
 CREATE TABLE IF NOT EXISTS worker (
     id             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name           VARCHAR(32)     NOT NULL,
